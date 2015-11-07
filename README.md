@@ -1,6 +1,6 @@
 # SoundLED
 
-Sound-Responsive LEDs controlled by an Arduino. Takes the difficulty out of programming the Arduino so you can simply enjoy the light show!
+Sound-Responsive LEDs controlled by an Arduino. Takes the difficulty out of programming the Arduino so you can enjoy the light show!
 
 **This repository is incomplete and nonfunctional as of now. Check again in a few days**
 
