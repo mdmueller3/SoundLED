@@ -2,11 +2,17 @@
 
 Sound-Responsive LEDs controlled by an Arduino. Takes the difficulty out of programming LEDs so you can enjoy the light show!
 
+
 Should work on any platform capable of inputing analog input up to 3.3v, such as:
+
 Arduino (Uno, Duo, Leonardo, Mega, Nano, Due)
+
 Adafruit Trinket & Gemma
+
 Teensy 2
+
 Raspberry Pi
+
 
 **This repository is incomplete and nonfunctional as of now. Check again in a few days**
 
