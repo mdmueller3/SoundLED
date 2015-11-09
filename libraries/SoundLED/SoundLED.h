@@ -21,7 +21,7 @@ class SoundLED
 {
   // user-accessible
   public:
-    SoundLED(int);
+    SoundLED(void);
     void printStuff(void);
     void setNumberOfLeds(int num);
     void setDataPin(int pin);
@@ -30,9 +30,7 @@ class SoundLED
 
   // library-accessible
   private:
-    void randomColorDark(void);
-    void randomColorMedium(void);
-    void randomColorBright(void);
+    void randomColor(void);
     int num_leds;
     int data_pin;
 

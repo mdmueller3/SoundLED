@@ -18,16 +18,16 @@
 // Constructor /////////////////////////////////////////////////////////////////
 // Function that handles the creation and setup of instances
 
-SoundLED::SoundLED(int givenValue)
+SoundLED::SoundLED(void)
 {
   // do whatever is required to initialize the library
-  pinMode(13, OUTPUT);
   Serial.begin(9600);
 }
 
-// Public Methods //////////////////////////////////////////////////////////////
-// Functions available in Wiring sketches, this library, and other libraries
-
+/**
+Right now simply acting as a testing method to make sure all is working
+Delete later
+*/
 void SoundLED::printStuff(void)
 {
   // eventhough this function is public, it can access
@@ -35,15 +35,29 @@ void SoundLED::printStuff(void)
   Serial.print(78);
 }
 
+
+/**
+Sets the number of leds so SoundLED can properly send out data
+*/
 void SoundLED::setNumberOfLeds(int num){
   num_leds = num;
 }
 
+
+/**
+Sets the data pin so that SoundLED knows where to send the value
+*/
 void SoundLED::setDataPin(int pin){
   data_pin = pin;
 }
 
-void SoundLED::randomColorBright(void){
+
+/**
+This will change the LED colors to a random color
+In the future, this will either be replaced by either settings to personalize
+the color change, or multiple random color settings (bright, med, dark)
+*/
+void SoundLED::randomColor(void){
   // int r = rand() % 256;
   // int g = rand() % 256;
   // int b = rand() % 256;
@@ -57,10 +71,9 @@ void SoundLED::randomColorBright(void){
   //  }
 }
 
-void SoundLED::randomColorMedium(void){}
-
-void SoundLED::randomColorDark(void){}
-
+/**
+Activates (sets up) the led stuff
+*/
 void SoundLED::activate(int pinOut){
 
   //must be constants (pinout, num_leds)
@@ -68,6 +81,9 @@ void SoundLED::activate(int pinOut){
 
 }
 
+/**
+Put inside of the loop, and is called every time the arduino cycles
+*/
 void SoundLED::go(int analogInput){}
 
 
