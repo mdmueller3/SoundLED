@@ -8,6 +8,7 @@
 
 #include <Arduino.h>
 #include <FastLED.h>
+#include <stdlib.h>
 
 // include this library's description file
 #include "SoundLED.h"
@@ -15,13 +16,24 @@
 // include description files for other libraries used (if any)
 #include "HardwareSerial.h"
 
-// Constructor /////////////////////////////////////////////////////////////////
-// Function that handles the creation and setup of instances
+// ENTER INFO HERE
 
-SoundLED::SoundLED(void)
-{
+#define DATA_PIN 7
+#define NUM_LEDS 50
+
+// ---------------
+
+
+/**
+Different options:
+*/
+
+int flicker = 0;
+
+SoundLED::SoundLED(void){
   // do whatever is required to initialize the library
   Serial.begin(9600);
+
 }
 
 /**
@@ -35,22 +47,34 @@ void SoundLED::printStuff(void)
   Serial.print(78);
 }
 
+/**
+Activates (sets up) the led stuff
+*/
+void SoundLED::activate(){
+  //create CRGB object
+  CRGB leds[NUM_LEDS];
+
+  //Add LEDSs
+  FastLED.addLeds<WS2811, DATA_PIN>(leds, NUM_LEDS);
+
+}
 
 /**
-Sets the number of leds so SoundLED can properly send out data
+Put inside of the loop, and is called every time the arduino cycles
 */
-void SoundLED::setNumberOfLeds(int num){
-  num_leds = num;
+void SoundLED::go(int analogInput){
+  int input = analogInput;
+
+  
+
+
+
 }
 
 
-/**
-Sets the data pin so that SoundLED knows where to send the value
-*/
-void SoundLED::setDataPin(int pin){
-  data_pin = pin;
+void setFlicker(int value){
+  flicker = value;
 }
-
 
 /**
 This will change the LED colors to a random color
@@ -70,20 +94,4 @@ void SoundLED::randomColor(void){
   //    FastLED.setBrightness(255);
   //  }
 }
-
-/**
-Activates (sets up) the led stuff
-*/
-void SoundLED::activate(int pinOut){
-
-  //must be constants (pinout, num_leds)
-  // FastLED.addLeds<WS2811, pinOut>(leds, num_leds);
-
-}
-
-/**
-Put inside of the loop, and is called every time the arduino cycles
-*/
-void SoundLED::go(int analogInput){}
-
 

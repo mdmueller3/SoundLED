@@ -7,31 +7,16 @@
 //leds[0] = CRGB::Blue;
 //FastLED.show();
 
-
-
-
 SoundLED sound = SoundLED();
-
-
-int analogInput;
-int savedRead;
 
 void setup(){
   //FastLED
   pinMode(0, INPUT);
-  
-  sound.setNumberOfLeds(0);
-  sound.setDataPin(50);
- 
-//  FastLED.addLeds<WS2811, DATA_PIN>(leds, NUM_LEDS);
-  
+  sound.activate(); 
 }
 
 void loop() {
-  analogInput = analogRead(A0);
+  int analogInput = analogRead(A0);
   sound.go(analogInput);
-  if(savedRead == 0){ //if not set
-    savedRead = analogInput;
-  }
 
 }

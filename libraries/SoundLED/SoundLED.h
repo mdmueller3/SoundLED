@@ -23,16 +23,17 @@ class SoundLED
   public:
     SoundLED(void);
     void printStuff(void);
-    void setNumberOfLeds(int num);
-    void setDataPin(int pin);
-    void activate(int pinOut);
+    void activate();
     void go(int analogInput);
+    void turnFlickerOn(int value);
 
   // library-accessible
   private:
     void randomColor(void);
     int num_leds;
     int data_pin;
+    int savedInput;
+    int flicker;
 
     
 };
