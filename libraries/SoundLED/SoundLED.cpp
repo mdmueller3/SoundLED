@@ -26,13 +26,22 @@
 
 /**
 Different options:
+  One color flash (brighter or darker per flash?)
+  Rainbow (red orange yellow green blue purple)
+  Violet, Blue
+  Random Color
+  Switch amongst the above
+
+  All with the option of flicker on or off
 */
 
-int flicker = 0;
 
 SoundLED::SoundLED(void){
   // do whatever is required to initialize the library
   Serial.begin(9600);
+
+  int savedInput = 0;
+  int darkSilence = 0;
 
 }
 
@@ -71,9 +80,27 @@ void SoundLED::go(int analogInput){
 
 }
 
+/**
+1: Red (brighten)
+2: Red (darken)
+3: Blue (brighten)
+4: Blue (darken)
+5: Green (brighten)
+6: Green (darken)
+7: Purple (brighten)
+8: Purple (darken)
+9: Turquoise (brighten)
+10: Turquoise (darken)
+11: Rainbow (R -> P)
+12: Rainbow (P -> R)
+13: Violet/Blue
+14: Random Color
+15: Yellow Sunshine
+*/
+void setColorScheme(int setting, int dark){
+  darkSilence = dark;
 
-void setFlicker(int value){
-  flicker = value;
+
 }
 
 /**

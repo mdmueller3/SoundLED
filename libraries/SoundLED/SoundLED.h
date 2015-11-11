@@ -25,7 +25,7 @@ class SoundLED
     void printStuff(void);
     void activate();
     void go(int analogInput);
-    void turnFlickerOn(int value);
+    void setColorScheme(int setting, int darkSilence);
 
   // library-accessible
   private:
