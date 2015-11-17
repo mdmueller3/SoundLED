@@ -16,13 +16,17 @@
 #include "WProgram.h"
 #endif
 
+#include "HardwareSerial.h"
+#include "SoundLED.h"
+#include "FastLED.h"
+#include <stdlib.h>
+
 // library interface description
 class SoundLED
 {
   // user-accessible
   public:
     SoundLED(void);
-    void setupSoundLED();
     void soundLEDLoop(int analogInput);
     int setMode(char color[]);
     void printMode(void);
@@ -37,12 +41,12 @@ class SoundLED
     void resetModes(void);
     void rainbow(void);
     void fire(void);
-    int num_leds;
-    int data_pin;
-    int savedInput;
-    int flicker;
+    void blues(void);
+    void random(void);
+    void noLight(void);
+    void setDarkMode(int answer);
 
-    
+    int savedInput;
 };
 
 #endif

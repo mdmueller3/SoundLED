@@ -12,7 +12,6 @@ SoundLED sound = SoundLED();
 void setup(){
   //FastLED
   pinMode(0, INPUT);
-  sound.setupSoundLED(); 
   sound.setMode("rainbow up");
 }
 
