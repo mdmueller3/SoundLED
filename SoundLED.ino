@@ -12,11 +12,12 @@ SoundLED sound = SoundLED();
 void setup(){
   //FastLED
   pinMode(0, INPUT);
-  sound.activate(); 
+  sound.setupSoundLED(); 
+  sound.setMode("rainbow up");
 }
 
 void loop() {
   int analogInput = analogRead(A0);
-  sound.go(analogInput);
+  sound.soundLEDLoop(analogInput);
 
 }

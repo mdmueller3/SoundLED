@@ -16,52 +16,51 @@
 // include description files for other libraries used (if any)
 #include "HardwareSerial.h"
 
+  
+
 // ENTER INFO HERE
 
+#define INPUT_PIN 6
 #define DATA_PIN 7
 #define NUM_LEDS 50
 
 // ---------------
 
 
-/**
-Different options:
-  One color flash (brighter or darker per flash?)
-  Rainbow (red orange yellow green blue purple)
-  Violet, Blue
-  Random Color
-  Switch amongst the above
 
-  All with the option of flicker on or off
-*/
+int savedInput = 0;
 
+//color scheme stuff
+int darkSilence = 0;
+
+int red = 1;
+int orange = 1;
+int yellow = 1;
+int green = 1;
+int blue = 1;
+int turquoise = 1;
+int purple = 1;
+int pink = 1;
+
+
+//modes
+#define NUM_MODES 7
+int modes[NUM_MODES];
+
+
+
+CRGB leds[NUM_LEDS];
 
 SoundLED::SoundLED(void){
   // do whatever is required to initialize the library
   Serial.begin(9600);
-
-  int savedInput = 0;
-  int darkSilence = 0;
-
-}
-
-/**
-Right now simply acting as a testing method to make sure all is working
-Delete later
-*/
-void SoundLED::printStuff(void)
-{
-  // eventhough this function is public, it can access
-  // and modify this library's private variables
-  Serial.print(78);
 }
 
 /**
 Activates (sets up) the led stuff
 */
-void SoundLED::activate(){
+void SoundLED::setupSoundLED(){
   //create CRGB object
-  CRGB leds[NUM_LEDS];
 
   //Add LEDSs
   FastLED.addLeds<WS2811, DATA_PIN>(leds, NUM_LEDS);
@@ -71,44 +70,284 @@ void SoundLED::activate(){
 /**
 Put inside of the loop, and is called every time the arduino cycles
 */
-void SoundLED::go(int analogInput){
+
+//data
+void SoundLED::soundLEDLoop(int analogInput){
   int input = analogInput;
 
-  
-
-
+  if((input - 40) < savedInput || (input + 40) > savedInput){
+    //check for mode
+    if(modes[0] == 1){
+      //Rainbow Up
+      rainbow();
+    }
+    else if(modes[1] == 1){
+      //Rainbow Down
+      rainbow();
+    }
+    else if(modes[2] == 1){
+      //Fire
+      fire();
+    }
+    else if(modes[3] == 1){
+      //Blues
+    }
+    else if(modes[4] == 1){
+      //Random Color
+    }
+    else if(modes[5] == 1){
+      //All
+    }
+    else{
+      //Custom
+    }
+  }
 
 }
+
 
 /**
-1: Red (brighten)
-2: Red (darken)
-3: Blue (brighten)
-4: Blue (darken)
-5: Green (brighten)
-6: Green (darken)
-7: Purple (brighten)
-8: Purple (darken)
-9: Turquoise (brighten)
-10: Turquoise (darken)
-11: Rainbow (R -> P)
-12: Rainbow (P -> R)
-13: Violet/Blue
-14: Random Color
-15: Yellow Sunshine
+Available modes:
+  Rainbow(up and down)
+  Fire
+  Violet & Blue
+  Random Color
+  Switch all based on 30 second intervals
+  Custom
 */
-void setColorScheme(int setting, int dark){
-  darkSilence = dark;
 
+/**
+Array Positions:
+  [0] = rainbow up
+
+*/
+int SoundLED::setMode(char mode[]){
+  resetModes();
+  if(mode == "rainbow up"){
+    modes[0] = 1;
+    return 1;
+  }
+  else if(mode == "rainbow down"){
+    modes[1] = 1;
+    return 1;
+  }
+  else if(mode == "fire"){
+    modes[2] = 1;
+    return 1;
+  }
+  else if(mode == "blues"){
+    modes[3] = 1;
+    return 1;
+  }
+  else if(mode == "random"){
+    modes[4] = 1;
+    return 1;
+  }
+  else if(mode == "all"){
+    modes[5] = 1;
+    return 1;
+  }
+  else if(mode == "custom"){
+    modes[6] = 1;
+    return 1;
+  }
+  else{
+    //Error
+    modes[6] = 1;
+    return - 1;
+  }
+}
+
+void printMode(void){
+  // do stuff later
+}
+
+
+void resetModes(void){
+  for(int i = 0; i < NUM_MODES; i++){
+    modes[i] = 0;
+  }
+}
+
+
+void SoundLED::allow(char color[]){
+  if(color == "red")
+    red = 1;
+  else if(color == "orange")
+    orange = 1;
+  else if(color == "yellow")
+    yellow = 1;
+  else if(color == "green")
+    green = 1;
+  else if(color == "blue")
+    blue = 1;
+  else if(color == "turquoise")
+    turquoise = 1;
+  else if(color == "purple")
+    purple = 1;
+  else if(color == "pink")
+    pink = 1;
+  else{
+    //not being read
+    Serial.print("Error reading input - allow(char color[])");
+  }
+}
+
+void SoundLED::disallow(char color[]){
+  if(color == "red")
+    red = 0;
+  else if(color == "orange")
+    orange = 0;
+  else if(color == "yellow")
+    yellow = 0;
+  else if(color == "green")
+    green = 0;
+  else if(color == "blue")
+    blue = 0;
+  else if(color == "turquoise")
+    turquoise = 0;
+  else if(color == "purple")
+    purple = 0;
+  else if(color == "pink")
+    pink = 0;
+  else{
+    //not being read
+    Serial.print("Error reading input - disallow(char color[])");
+  }
+}
+
+
+int rainbowNum = 0;
+void SoundLED::rainbow(){
+  switch(rainbowNum){
+    case 0:
+      for(int dot = 0; dot < NUM_LEDS; dot++){
+           leds[dot] = CRGB::Red;
+           FastLED.show();
+      }
+      break;
+    case 1:
+      for(int dot = 0; dot < NUM_LEDS; dot++){
+           leds[dot] = CRGB::Orange;
+           FastLED.show();
+      }
+      break;
+    case 2:
+      for(int dot = 0; dot < NUM_LEDS; dot++){
+           leds[dot] = CRGB::Yellow;
+           FastLED.show();
+      }
+      break;
+    case 3:
+      for(int dot = 0; dot < NUM_LEDS; dot++){
+           leds[dot] = CRGB::Green;
+           FastLED.show();
+      }
+      break;
+    case 4:
+      for(int dot = 0; dot < NUM_LEDS; dot++){
+           leds[dot] = CRGB::Blue;
+           FastLED.show();
+      }
+      break;
+    case 5:
+      for(int dot = 0; dot < NUM_LEDS; dot++){
+           leds[dot] = CRGB::Violet;
+           FastLED.show();
+      }
+      break;
+    case 6:
+      for(int dot = 0; dot < NUM_LEDS; dot++){
+           leds[dot] = CRGB::Pink;
+           FastLED.show();
+      }
+      break;
+    default:
+      for(int dot = 0; dot < NUM_LEDS; dot++){
+           leds[dot] = CRGB::Red;
+           FastLED.show();
+      }
+      rainbowNum = 0;
+      break;
+  }
+  if(modes[0] == 1){
+    if(rainbowNum == 6){
+      rainbowNum = 0;
+    }
+    else{
+      rainbowNum++;
+    }
+  }
+  else{
+    if(rainbowNum == 0){
+      rainbowNum = 6;
+    }
+    else{
+      rainbowNum--;
+    }
+  }
+}
+
+int fireNum = 0;
+void SoundLED::fire(){
+  bool notNew = true;
+  int newNum = fireNum;
+  while(notNew){
+    newNum = rand() % 3;
+    if(newNum != fireNum){
+      fireNum = newNum;
+      notNew = false;
+    }
+  }
+
+  switch(fireNum){
+    case 0:
+      for(int dot = 0; dot < NUM_LEDS; dot++){
+           leds[dot] = CRGB::Red;
+           FastLED.show();
+      }
+      break;
+    case 1:
+      for(int dot = 0; dot < NUM_LEDS; dot++){
+           leds[dot] = CRGB::Orange;
+           FastLED.show();
+      }
+      break;
+    case 2:
+      for(int dot = 0; dot < NUM_LEDS; dot++){
+           leds[dot] = CRGB::Yellow;
+           FastLED.show();
+      }
+      break;
+    default:
+      for(int dot = 0; dot < NUM_LEDS; dot++){
+           leds[dot] = CRGB::Red;
+           FastLED.show();
+      }
+      break;
+  }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
 This will change the LED colors to a random color
 In the future, this will either be replaced by either settings to personalize
 the color change, or multiple random color settings (bright, med, dark)
 */
-void SoundLED::randomColor(void){
+// void SoundLED::randomColor(void){
   // int r = rand() % 256;
   // int g = rand() % 256;
   // int b = rand() % 256;
@@ -120,5 +359,5 @@ void SoundLED::randomColor(void){
   //    FastLED.show();
   //    FastLED.setBrightness(255);
   //  }
-}
+// }
 

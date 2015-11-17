@@ -22,14 +22,21 @@ class SoundLED
   // user-accessible
   public:
     SoundLED(void);
-    void printStuff(void);
-    void activate();
-    void go(int analogInput);
-    void setColorScheme(int setting, int darkSilence);
+    void setupSoundLED();
+    void soundLEDLoop(int analogInput);
+    int setMode(char color[]);
+    void printMode(void);
+    void allow(char color[]);
+    void disallow(char color[]);
+    void printAllowList(void);
+    void printDisallowList(void);
+
 
   // library-accessible
   private:
-    void randomColor(void);
+    void resetModes(void);
+    void rainbow(void);
+    void fire(void);
     int num_leds;
     int data_pin;
     int savedInput;
