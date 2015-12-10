@@ -8,7 +8,7 @@ There are two main ways to create sound-responsive LEDs. These are:
 
 While the first one would be nice to have, most of us don't have a sound-source capable of controlling LED lights. And while there are devices that both have GPIO pins and a chip capable of playing music, you are quickly adding complexity. So SoundLED aims to make the second one easy.
 
-SoundLED should work on any platform capable of inputing analog input up to 3.3v and outputting 3.3-5v. A full list of working platforms will come soon.
+SoundLED as of now is only operational on the Arduino. Most Arduino boards should work (a full list will come soon)
 
 **This repository is a work in progress**
 
@@ -35,19 +35,4 @@ The first thing to do is to download the FastLED library, [found here.](https://
 
 While SoundLED controls the sound-responsiveness of the program, controlling the LEDs is a whole nother monster. FastLED makes all of this easy. The FastLED library is a complex but very simple-to-use library and I highly recommend checking it out if you wish to do any custom LED control.
 
-Next, open your platform's IDE. For the Arduino, go to Sketch > Import Library > Add Library and find both the FastLED and SoundLED libraries. After this, add them both to the top of your Arduino program:
-
-```
-#include <SoundLED.h>
-#include <FastLED.h>
-```
-
-Next, create a SoundLED object:
-
-```
-SoundLED sound = SoundLED();
-```
-
-And now your program is all ready to use the SoundLED library!
-
-# Using SoundLED (coming soon)
+**TBD - Due to recent issues, SoundLED may not be functional for a couple of weeks. I apologize**
