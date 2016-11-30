@@ -1,6 +1,6 @@
 # SoundLED
 
-Sound-Responsive LEDs controlled by an Arduino. Built in C with the use of the [FastLED library](https://github.com/FastLED/FastLED)
+Sound-Responsive LEDs controlled by an Arduino. Built in C++ with the use of the [FastLED library](https://github.com/FastLED/FastLED)
 
 There are two main ways to create sound-responsive LEDs. These are:
 * Control the lights directly from your sound-source
